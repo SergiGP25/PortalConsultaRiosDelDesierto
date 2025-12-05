@@ -11,11 +11,11 @@ export class ExportClientUseCase {
 
     /**
      * Execute the use case.
-     * @param {string} documentNumber
      * @param {number} documentType
+     * @param {string} documentNumber
      * @returns {Promise<Blob>}
      */
-    async execute(documentNumber, documentType) {
-        return await this.clientRepository.exportClient(documentNumber, documentType);
+    async execute(documentType, documentNumber) {
+        return await this.clientRepository.exportClient(documentType, documentNumber);
     }
 }

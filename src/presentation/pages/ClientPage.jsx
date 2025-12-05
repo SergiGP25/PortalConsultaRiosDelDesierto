@@ -42,10 +42,10 @@ const ClientPage = () => {
         setClient(null);
         setSearchParams({ documentNumber, documentType });
         try {
-            const result = await getClientUseCase.execute(documentNumber, documentType);
+            const result = await getClientUseCase.execute(documentType, documentNumber);
             setClient(result);
         } catch (err) {
-            setError("Client not found or error fetching data.");
+            setError("Cliente no encontrado");
             console.error(err);
         } finally {
             setLoading(false);
@@ -55,7 +55,7 @@ const ClientPage = () => {
     const handleExport = async () => {
         if (!client) return;
         try {
-            const blob = await exportClientUseCase.execute(searchParams.documentNumber, searchParams.documentType);
+            const blob = await exportClientUseCase.execute(searchParams.documentType, searchParams.documentNumber);
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -63,7 +63,7 @@ const ClientPage = () => {
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            alert("Failed to export client data.");
+            alert("Error al exportar datos del cliente.");
         }
     };
 
@@ -77,34 +77,43 @@ const ClientPage = () => {
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            alert("Failed to download fidelity report.");
+            alert("Error al descargar el reporte de fidelización.");
         }
     };
 
     return (
-        <div className="client-page">
-            <header className="page-header">
-                <h1>Client Consultation Portal</h1>
-            </header>
+        <div className="min-h-screen py-8 px-4">
+            <div className="max-w-7xl mx-auto">
+                <header className="text-center mb-12">
+                    <h1 className="text-5xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-2">
+                        Portal de Consulta de Clientes
+                    </h1>
+                    <p className="text-gray-600 text-lg">Buscar y gestionar información de clientes</p>
+                </header>
 
-            <main className="page-content">
-                <div className="actions-bar">
-                    <ClientSearch onSearch={handleSearch} loading={loading} documentTypes={documentTypes} />
-                    <FidelityReportButton onDownload={handleFidelityReport} />
-                </div>
-
-                {error && <div className="error-message">{error}</div>}
-
-                {client && (
-                    <div className="results-section">
-                        <div className="client-header-actions">
-                            <ClientInfo client={client} />
-                            <ExportClientButton onExport={handleExport} disabled={loading} />
-                        </div>
-                        <PurchasesTable purchases={client.compras} />
+                <main>
+                    <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
+                        <ClientSearch onSearch={handleSearch} loading={loading} documentTypes={documentTypes} />
+                        <FidelityReportButton onDownload={handleFidelityReport} />
                     </div>
-                )}
-            </main>
+
+                    {error && (
+                        <div className="bg-red-50 border-2 border-red-300 text-red-700 px-6 py-4 rounded-xl mb-8 text-center font-medium shadow-sm">
+                            {error}
+                        </div>
+                    )}
+
+                    {client && (
+                        <div className="space-y-6 animate-fadeIn">
+                            <div className="flex flex-col gap-4">
+                                <ClientInfo client={client} />
+                                <ExportClientButton onExport={handleExport} disabled={loading} />
+                            </div>
+                            <PurchasesTable purchases={client.compras} />
+                        </div>
+                    )}
+                </main>
+            </div>
         </div>
     );
 };

@@ -11,11 +11,11 @@ export class GetClientUseCase {
 
     /**
      * Execute the use case.
-     * @param {string} documentNumber
      * @param {number} documentType
+     * @param {string} documentNumber
      * @returns {Promise<import("../models/Client").Client>}
      */
-    async execute(documentNumber, documentType) {
-        return await this.clientRepository.getClient(documentNumber, documentType);
+    async execute(documentType, documentNumber) {
+        return await this.clientRepository.getClient(documentType, documentNumber);
     }
 }

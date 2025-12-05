@@ -3,11 +3,9 @@ import { Client } from '../../domain/models/Client';
 import apiClient from '../sources/api/ApiClient';
 
 export class ClientRepositoryImpl extends ClientRepository {
-    async getClient(documentNumber, documentType) {
+    async getClient(documentType, documentNumber) {
         try {
-            const response = await apiClient.get(`/api/Clientes/${documentNumber}`, {
-                params: { tipoDocumento: documentType }
-            });
+            const response = await apiClient.get(`/api/Clientes/${documentType}/${documentNumber}`);
             return new Client(response.data);
         } catch (error) {
             console.error("Error fetching client:", error);
@@ -15,11 +13,10 @@ export class ClientRepositoryImpl extends ClientRepository {
         }
     }
 
-    async exportClient(documentNumber, documentType) {
+    async exportClient(documentType, documentNumber) {
         try {
-            const response = await apiClient.get(`/api/Clientes/Reporte/${documentNumber}`, {
+            const response = await apiClient.get(`/api/Clientes/Reporte/${documentType}/${documentNumber}`, {
                 params: {
-                    tipoDocumento: documentType,
                     formato: 'csv'
                 },
                 responseType: 'blob',
