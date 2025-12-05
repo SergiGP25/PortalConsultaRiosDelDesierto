@@ -3,9 +3,11 @@ import { Client } from '../../domain/models/Client';
 import apiClient from '../sources/api/ApiClient';
 
 export class ClientRepositoryImpl extends ClientRepository {
-    async getClient(documentNumber) {
+    async getClient(documentNumber, documentType) {
         try {
-            const response = await apiClient.get(`/api/Clientes/${documentNumber}`);
+            const response = await apiClient.get(`/api/Clientes/${documentNumber}`, {
+                params: { tipoDocumento: documentType }
+            });
             return new Client(response.data);
         } catch (error) {
             console.error("Error fetching client:", error);
@@ -13,10 +15,13 @@ export class ClientRepositoryImpl extends ClientRepository {
         }
     }
 
-    async exportClient(documentNumber) {
+    async exportClient(documentNumber, documentType) {
         try {
-            const response = await apiClient.get(`/api/Clientes/export/${documentNumber}`, {
-                params: { formato: 'csv' },
+            const response = await apiClient.get(`/api/Clientes/Reporte/${documentNumber}`, {
+                params: {
+                    tipoDocumento: documentType,
+                    formato: 'csv'
+                },
                 responseType: 'blob',
             });
             return response.data;
@@ -34,6 +39,16 @@ export class ClientRepositoryImpl extends ClientRepository {
             return response.data;
         } catch (error) {
             console.error("Error fetching fidelity report:", error);
+            throw error;
+        }
+    }
+
+    async getDocumentTypes() {
+        try {
+            const response = await apiClient.get('/api/Clientes/Documentos');
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching document types:", error);
             throw error;
         }
     }
