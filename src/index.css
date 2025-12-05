@@ -1,0 +1,240 @@
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #4338ca;
+    --background-color: #0f172a;
+    --card-background: #1e293b;
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+}
+
+.client-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+/* Actions Bar */
+.actions-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+/* Search Component */
+.search-container {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    max-width: 600px;
+}
+
+.search-form {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.search-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.search-button {
+    padding: 0 2rem;
+    border-radius: 12px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.search-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Action Buttons */
+.action-button {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    /* Match search input height */
+}
+
+.action-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.fidelity-button {
+    background-color: var(--success-color);
+}
+
+.fidelity-button:hover {
+    background-color: #059669;
+}
+
+.export-button {
+    background-color: var(--warning-color);
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.export-button:hover {
+    background-color: #d97706;
+}
+
+/* Client Info Card */
+.client-info-card {
+    background-color: var(--card-background);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    flex: 1;
+}
+
+.client-header-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-info-card h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-item label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.info-item span {
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+/* Purchases Table */
+.table-container {
+    background-color: var(--card-background);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.table-container h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.purchases-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.purchases-table th {
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.purchases-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.purchases-table tr:last-child td {
+    border-bottom: none;
+}
+
+.no-data {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    background-color: var(--card-background);
+    border-radius: 12px;
+}
+
+.error-message {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
